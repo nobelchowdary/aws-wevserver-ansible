@@ -1,0 +1,33 @@
+- hosts: "localhost"
+
+  vars_files:
+
+      - secret_key.yml
+
+  tasks:
+
+  - name: "OS provisioning on AWS using Ansible"
+
+    amazon.aws.ec2:
+       key_name: amazonkey
+       instance_type: t2.micro
+       image: ami-0a9d27a9f4f5c0efc
+       instance_tags:
+         Name: aws_ansible_ec2
+         key: webs
+         value: w1
+       group_id: sg-0516d701ade27b5cb
+       vpc_subnet_id: subnet-bda7d9f1
+       region: ap-south-1
+       state: present
+       aws_access_key: "{{aws_access_key}}"
+       aws_secret_key: "{{aws_secret_key}}"
+
+    register: X
+
+
+  - debug:
+  
+
+     var:  X.instances[0].private_ip
+

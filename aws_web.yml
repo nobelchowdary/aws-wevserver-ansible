@@ -1,0 +1,27 @@
+- hosts: all
+  tasks:
+
+   - package:
+        name: "httpd"
+        state: present
+
+   - service:
+        name: "httpd"
+        state: started
+
+   - copy:
+        dest: "/var/www/html"
+        src: "/ws1/webs.html"
+
+   - yum:
+        name: python3
+        state: present     
+   - yum:
+         name: firewalld
+
+   - firewalld:
+        port: "80/tcp"
+        permanent: yes
+        state: enabled
+
+
